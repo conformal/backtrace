@@ -218,7 +218,7 @@ _backtrace_symbols(void *const *buffer, int depth, int add_cr)
 	char			*line[BT_MAX_DEPTH];
 	int			i, x;
 	char			**rv = NULL, *current;
-	char			*cr;
+	char			*cr, *s;
 	size_t			sz, csz;
 
 	if (buffer == NULL || depth <= 0)
@@ -230,16 +230,24 @@ _backtrace_symbols(void *const *buffer, int depth, int add_cr)
 		cr = "";
 
 	for (i = 0, sz = 0; i < depth; i++) {
-		if (dladdr(buffer[i], &bt[i].bt_dlinfo) == 0)
-			return (NULL);
-
-		if (asprintf(&line[i], "%p <%s+%ld> at %s%s",
-		    buffer[i],
-		    bt[i].bt_dlinfo.dli_sname,
-		    buffer[i] - bt[i].bt_dlinfo.dli_saddr,
-		    bt[i].bt_dlinfo.dli_fname,
-		    cr) == -1)
-			goto unwind;
+		if (dladdr(buffer[i], &bt[i].bt_dlinfo) == 0) {
+			/* try something */
+			if (asprintf(&line[i], "%p%s",
+			    buffer[i],
+			    cr) == -1)
+				goto unwind;
+		} else {
+			s = (char *)bt[i].bt_dlinfo.dli_sname;
+			if (s == NULL)
+				s = "???";
+			if (asprintf(&line[i], "%p <%s+%ld> at %s%s",
+			    buffer[i],
+			    s,
+			    buffer[i] - bt[i].bt_dlinfo.dli_saddr,
+			    bt[i].bt_dlinfo.dli_fname,
+			    cr) == -1)
+				goto unwind;
+		}
 		sz += strlen(line[i]) + 1;
 	}
 
