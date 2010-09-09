@@ -13,7 +13,7 @@ CFLAGS+= -fdiagnostics-show-option -Wall -Werror
 CFLAGS+= -Wall -Werror
 .endif
 CFLAGS+= -ggdb3
-CFLAGS+= -I/usr/local/include -I${.CURDIR} -I.
+CFLAGS+= -I/usr/local/include
 #MAN= backtrace.3
 LDFLAGS+= -Wl,--export-dynamic -lclog -lassl -lssl -lcrypto
 HDRS= backtrace.h
