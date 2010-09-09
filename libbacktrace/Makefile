@@ -15,7 +15,7 @@ CFLAGS+= -Wall -Werror
 CFLAGS+= -ggdb3
 CFLAGS+= -I/usr/local/include
 #MAN= backtrace.3
-LDFLAGS+= -Wl,--export-dynamic -lclog -lassl -lssl -lcrypto
+LDFLAGS+= -Wl,--export-dynamic
 HDRS= backtrace.h
 
 includes:
