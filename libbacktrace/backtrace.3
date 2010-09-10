@@ -96,3 +96,7 @@ was written by
 As typical with GNU software the interface is clumsy and error prone.
 While writing a more sophisticated backtracing mechanism it was obvious that
 the GNU functionality could be trivially emulated.
+.Pp
+Due to a bug in gcc one has to compile applications with the following flags
+.Pa -Wl,--export-dynamic
+in order to get human readable function names.
