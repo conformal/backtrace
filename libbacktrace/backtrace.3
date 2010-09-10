@@ -1,0 +1,98 @@
+.\" $backtrace$
+.\"
+.\" Copyright (c) 2010 Marco Peereboom <marco@peereboom.us>
+.\" Copyright (c) 2010 Conformal Systems LLC <info@conformal.com>
+.\"
+.\" Permission to use, copy, modify, and distribute this software for any
+.\" purpose with or without fee is hereby granted, provided that the above
+.\" copyright notice and this permission notice appear in all copies.
+.\"
+.\" THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+.\" WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+.\" MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+.\" ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+.\" WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+.\" ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+.\" OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+.\"
+.Dd $Mdocdate$
+.Dt BACKTRACE 3
+.Os
+.Sh NAME
+.Nm backtrace
+.Nd glibc and libexecinfo backtrace compatible API
+.Sh SYNOPSIS
+.Fd #include <backtrace.h>
+.Ft int
+.Fn backtrace "void **buffer" "int depth"
+.Ft char **
+.Fn backtrace_symbols "void *const *buffer" "int depth"
+.Ft void
+.Fn backtrace_symbols_fd "void *const *buffer" "int depth" "int fd"
+.Sh DESCRIPTION
+.Fn backtrace
+fills out the pointer array provided in
+.Pa buffer
+up to
+.Pa depth
+elements with the stack trace pointers.
+It returns the stack depth on success or -1 on failure.
+.Pp
+.Fn backtrace_symbols
+returns an array of strings.
+Each string represents one
+.Pa buffer
+element.
+The
+.Pa depth
+parameter governs the
+.Pa buffer
+length.
+On failure the function returns NULL.
+The caller is responsible for freeing the returned pointer.
+.Pp
+.Fn backtrace_symbols_fd
+creates an identical trace as
+.Fn backtrace_symbols
+however it writes it to file
+.Pa fd .
+The caller is responsible for opening the file with the appropriate flags.
+.Sh EXAMPLES
+The following code fragment illustrates the use of the backtrace
+functionality:
+.Bd -literal -offset indent
+void
+print_backtrace(void)
+{
+	void			*bt[BT_MAX_DEPTH];
+	char			**strings;
+	int			i, d;
+
+        d = backtrace(bt, BT_MAX_DEPTH);
+	if (d == -1)
+		errx(1, "backtrace");
+
+	strings = backtrace_symbols(bt, d);
+
+	if (strings == NULL)
+		errx(1, "backtrace_symbols");
+
+	for (i = 0; i < d; i++)
+		printf("%s\n", strings[i]);
+
+	free(strings);
+}
+.Ed
+.Pp
+.Sh SEE ALSO
+.Xr gdb 1
+.Xr gcc 1
+.Sh HISTORY
+.An -nosplit
+.Nm
+was written by
+.An Marco Peereboom Aq marco@conformalcom
+.Sh BUGS
+As typical with GNU software the interface is clumsy and error prone.
+While writing a more sophisticated backtracing mechanism it was obvious that
+the GNU functionality could be trivially emulated.
