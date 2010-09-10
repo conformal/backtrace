@@ -14,9 +14,13 @@ CFLAGS+= -Wall -Werror
 .endif
 CFLAGS+= -ggdb3
 CFLAGS+= -I/usr/local/include
-MAN= backtrace.3
 LDFLAGS+= -Wl,--export-dynamic
 HDRS= backtrace.h
+
+MAN= backtrace.3
+MANDIR= ${PREFIX}/man/cat
+MLINKS+= backtrace backtrace_symbols
+MLINKS+= backtrace backtrace_symbols_fd
 
 includes:
 	@cd ${.CURDIR}; for i in ${HDRS}; do \
