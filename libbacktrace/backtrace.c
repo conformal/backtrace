@@ -28,7 +28,6 @@
 #include <sys/types.h>
 
 #include <dlfcn.h>
-#include <bfd.h>
 
 #include "backtrace.h"
 
