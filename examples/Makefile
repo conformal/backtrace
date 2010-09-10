@@ -7,8 +7,8 @@ SRCS= backtrace_test.c
 COPTS= -O0
 DEBUG+= -ggdb3
 CFLAGS+= -Wall -Werror
-CPPFLAGS+= -I/usr/local/include -I ../../libbacktrace
-LDFLAGS+= -L/usr/local/lib -L ../../libbacktrace/obj -lbacktrace
+CPPFLAGS+= -I/usr/local/include -I../../libbacktrace -I../libbacktrace
+LDFLAGS+= -L/usr/local/lib -L../../libbacktrace/obj -L../libbacktrace/ -lbacktrace
 # required to print function names using the compat API
 LDFLAGS+= -Wl,--export-dynamic
 
