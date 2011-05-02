@@ -29,5 +29,7 @@ includes:
 	echo ${INSTALL} ${INSTALL_COPY} -m 444 -o $(BINOWN) -g $(BINGRP) $$i ${LOCALBASE}/include;\
 	done
 
+install: includes
+
 .include <bsd.own.mk>
 .include <bsd.lib.mk>
