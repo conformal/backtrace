@@ -14,4 +14,6 @@ LDFLAGS+= -L${LOCALBASE}/lib -L../../libbacktrace/obj -L../libbacktrace/ -lbackt
 # required to print function names using the compat API
 LDFLAGS+= -Wl,--export-dynamic
 
+install:
+
 .include <bsd.prog.mk>
