@@ -22,6 +22,8 @@ MANDIR= ${LOCALBASE}/man/cat
 MLINKS+= backtrace.3 backtrace_symbols.3
 MLINKS+= backtrace.3 backtrace_symbols_fd.3
 
+CLEANFILES+= backtrace.cat3
+
 includes:
 	@cd ${.CURDIR}; for i in ${HDRS}; do \
 	cmp -s $$i ${LOCALBASE}/include/$$i || \
