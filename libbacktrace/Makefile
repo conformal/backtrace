@@ -19,8 +19,8 @@ HDRS= backtrace.h
 
 MAN= backtrace.3
 MANDIR= ${LOCALBASE}/man/cat
-MLINKS+= backtrace backtrace_symbols
-MLINKS+= backtrace backtrace_symbols_fd
+MLINKS+= backtrace.3 backtrace_symbols.3
+MLINKS+= backtrace.3 backtrace_symbols_fd.3
 
 includes:
 	@cd ${.CURDIR}; for i in ${HDRS}; do \
