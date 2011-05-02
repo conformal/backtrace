@@ -1,8 +1,8 @@
 # $backtrace$
 
-PREFIX?=/usr/local
-BINDIR=${PREFIX}/bin
-LIBDIR=${PREFIX}/lib
+LOCALBASE?=/usr/local
+BINDIR=${LOCALBASE}/bin
+LIBDIR=${LOCALBASE}/lib
 
 #WANTLINT=
 LIB= backtrace
@@ -18,15 +18,15 @@ LDFLAGS+= -Wl,--export-dynamic
 HDRS= backtrace.h
 
 MAN= backtrace.3
-MANDIR= ${PREFIX}/man/cat
+MANDIR= ${LOCALBASE}/man/cat
 MLINKS+= backtrace backtrace_symbols
 MLINKS+= backtrace backtrace_symbols_fd
 
 includes:
 	@cd ${.CURDIR}; for i in ${HDRS}; do \
-	cmp -s $$i ${PREFIX}/include/$$i || \
-	${INSTALL} ${INSTALL_COPY} -m 444 -o $(BINOWN) -g $(BINGRP) $$i ${PREFIX}/include; \
-	echo ${INSTALL} ${INSTALL_COPY} -m 444 -o $(BINOWN) -g $(BINGRP) $$i ${PREFIX}/include;\
+	cmp -s $$i ${LOCALBASE}/include/$$i || \
+	${INSTALL} ${INSTALL_COPY} -m 444 -o $(BINOWN) -g $(BINGRP) $$i ${LOCALBASE}/include; \
+	echo ${INSTALL} ${INSTALL_COPY} -m 444 -o $(BINOWN) -g $(BINGRP) $$i ${LOCALBASE}/include;\
 	done
 
 .include <bsd.own.mk>
