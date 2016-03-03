@@ -26,6 +26,8 @@
 
 #include "backtrace.h"
 
+#define BT_MAX_DEPTH            (128)
+
 void
 f2(void)
 {

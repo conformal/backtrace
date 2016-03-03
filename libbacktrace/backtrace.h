@@ -16,18 +16,25 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
+#ifndef _EXECINFO_H_
+#define _EXECINFO_H_
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #ifndef __GNUC__
 #error "this library must be compiled with gcc"
 #endif
 
-#define BT_MAX_DEPTH            (128)
-
-struct bt_frame {
-	Dl_info			bt_dlinfo;
-	unsigned int		line;
-};
+#include <dlfcn.h>
 
 /* compatability functions with libexecinfo and glibc */
 int			backtrace(void **, int);
 char			**backtrace_symbols(void *const *, int);
 void			backtrace_symbols_fd(void *const *, int, int);
+
+#ifdef __cplusplus
+}
+#endif
+#endif
