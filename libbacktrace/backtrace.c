@@ -35,6 +35,12 @@ __attribute__((unused)) static const char *cvstag = "$backtrace$";
 
 #define BT_GET_DEPTH		(1)
 #define BT_ADD_CR		(1)
+#define BT_MAX_DEPTH            (128)
+
+struct bt_frame {
+	Dl_info			bt_dlinfo;
+	unsigned int		line;
+};
 
 #define HANDLE_FRAME(depth, idx, btaddr)				\
 	case depth:							\
